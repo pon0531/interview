@@ -94,7 +94,44 @@ output: SQUARE(3 + 2) → 3 + 2 * 3 + 2 = 11
 表示該變數不屬於某個類別實例，他屬於這個類別，所有以此類別生成出來的實例都共用這個變數。
 4. static 出現在類別的成員函式之前 (C++ only)：
 表示該函式不屬於某個類別實例，他屬於這個類別，所有以此類別生成出來的實例都共用這個函式（即便我們沒有產生實例出來，我們也隨時可以取用這個函式）
+
 [Reference](https://medium.com/@alan81920/c-c-%E4%B8%AD%E7%9A%84-static-extern-%E7%9A%84%E8%AE%8A%E6%95%B8-9b42d000688f)
+</details>
+
+<details>
+<summary>Q7: What is stack and heap when talking about memory ?</summary>
+Stack: allocated by compiler, store function parameters and local variables
+    
+1. very fast access
+2. don't have to explicitly de-allocate variables
+3. space is managed efficiently by CPU, memory will not become fragmented
+4. local variables only
+5. limit on stack size (OS-dependent)
+6. variables cannot be resized
+
+   
+Heap: allocated by programmer
+1. variables can be accessed globally
+2. no limit on memory size
+3. (relatively) slower access
+4. no guaranteed efficient use of space, memory may become fragmented
+5. you must manage memory (you're in charge of allocating and freeing variables) or memory leakage will happen
+6. variables can be resized using realloc()
+
+   
+Static: store global variable and static variable (initialized when process starts)
+Literal Constant: store comments (text)
+</details>
+
+<details>
+<summary>Q8: Explain “thread” and “process”, and what is the difference ? </summary>
+Process: an executing instance of an program. Process takes more time to terminate and it is isolated means it does not share memory with any other process.
+
+Thread: a path of execution within a process. Thread takes less time to terminate as compared to process and like process threads do not isolate. They share memory with other threads.
+
+
+The typical difference is that threads (of the same process) run in a shared memory space, while processes run in separate memory spaces.
+[Reference](https://pediaa.com/difference-between-process-and-thread/)
 </details>
 
 ## 程式題
@@ -150,6 +187,46 @@ Ans:
 #define clearBit(x,n) (x&= ~(1<<n))
                               
 #define inverseBit(x,n) (x^= (1<<n))
+
+</details>
+
+<details>
+<summary>Q4: Define pointer</summary>
+
+1. An integer
+2. A pointer to an integer
+3. A pointer to a pointer to an integer
+4. An array of 10 integers
+5. An array of 10 pointers to integers
+6. A pointer to an array of 10 integers
+7. A pointer to a function that takes an integer as an argument and returns an integer
+8. An array of 10 pointers to integers
+
+
+
+An array of ten pointers to functions that take an integer argument and return an integer
+
+1. int a
+2. int *a
+3. int **a
+4. int a[10]
+5. int *a[10]
+6. int (*a)[10]
+7. int (*a)(int)
+8. int (*a[10])(int)
+</details>
+
+<details>
+<summary>Q5: What is the content of array a ?</summary>
+int a[] = {6, 7, 8, 9, 10};
+
+int *p = a;
+
+*(p++) += 123;
+
+*(++p) += 123;
+
+ANS: {129, 7, 131, 9, 10}
 
 </details>
 
