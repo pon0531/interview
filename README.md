@@ -94,9 +94,9 @@ output: SQUARE(3 + 2) → 3 + 2 * 3 + 2 = 11
 表示該變數不屬於某個類別實例，他屬於這個類別，所有以此類別生成出來的實例都共用這個變數。
 4. static 出現在類別的成員函式之前 (C++ only)：
 表示該函式不屬於某個類別實例，他屬於這個類別，所有以此類別生成出來的實例都共用這個函式（即便我們沒有產生實例出來，我們也隨時可以取用這個函式）
-  
 [Reference](https://medium.com/@alan81920/c-c-%E4%B8%AD%E7%9A%84-static-extern-%E7%9A%84%E8%AE%8A%E6%95%B8-9b42d000688f)
-  
+</details>
+
 ## 程式題
 <details>
 <summary>Q1: bitwise operation</summary>
