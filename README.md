@@ -134,6 +134,25 @@ The typical difference is that threads (of the same process) run in a shared mem
 [Reference](https://pediaa.com/difference-between-process-and-thread/)
 </details>
 
+<details>
+<summary>Q9: What is the difference between variable declaration and definition ?</summary>
+A declaration provides basic attributes of a symbol: its type and name. 
+    
+A definition provides all of the details of that symbol.
+</details>
+
+<details>
+<summary>Q10: Explain lvalue and rvalue.</summary>
+value 指 等號的左值
+rvalue 指 等號的右值
+
+lvalue 是一個物件的保存在單一運算式之外的物件
+rvalue 是一個物件在某個時間單位的結果
+
+++c 是lvalue
+c++ 是rvalue
+</details>
+
 ## 程式題
 <details>
 <summary>Q1: bitwise operation</summary>
@@ -143,13 +162,15 @@ unsigned long v2 = 0x 00001202;
 
 unsigned long v;
 
-v = v1&(~v2);
+v = v1&(~v2); ......1
 
-v = v | v2;
+v = v | v2;.........2
 
 ask: the value of v?
 
-ANS:0x00001313
+記得先轉成2進位再做 bit operation
+
+ANS. (1) v = 0x00000111 (2) v = 0x00001313
 
 </details>
 
@@ -182,12 +203,21 @@ c) inverse the specific bit (0->1; 1->0)
 
 Ans:
 
+Modify by define:
+
 #define setBit(x,n) (x|= (1<<n))
                               
 #define clearBit(x,n) (x&= ~(1<<n))
                               
 #define inverseBit(x,n) (x^= (1<<n))
 
+Modify by function:
+
+1. void setBit(int &a, b) { a |= (0x1<<b); }
+
+2. void clearBit3(int &a, b) { a &= ~(0x1<<b); }
+
+3. void inverseBit(int &a, b) { a ^= (0x1<<b); }
 </details>
 
 <details>
@@ -229,6 +259,187 @@ int *p = a;
 ANS: {129, 7, 131, 9, 10}
 
 </details>
+
+<details>
+<summary>Q6: Is the program below correct ?</summary>
+unsigned int zero = 0;
+
+unsigned int compzero = 0xFFFF; /*1’s complement of zero */
+
+對于一個整數型不是16位元的處理器為說，上面的程式碼是不正確的。應編寫如下︰ unsigned int compzero = ~0;
+</details>
+
+<details>
+<summary>Q7: What is the output of the following program ?</summary>
+<pre><code>
+void foo(void) {
+unsigned int a = 6;
+    int b = -20;
+    (a + b > 6) ? puts(“> 6”) : puts(“<= 6”);
+}
+</code></pre>
+
+當表達式中存在有符號類型和無符號類型（unsigned）時所有的操作數都自動轉換為無符號類型。因此-20變成了一個非常大的正整數，所以該表達式計算出的結果大于6。
+</details>
+<details>
+<summary>Q8: The faster way to an integer multiply by 7 ?</summary>
+i = (i << 2) + (i << 1) + (i << 0)
+
+i = (i << 3)-i
+</details>
+
+<details>
+<summary>Q9: Reverse a string</summary>
+<pre><code>
+void reverseStr(string& str) {
+    int n = str.length();
+    for (int i = 0; i < n / 2; i++)
+        swap(str[i], str[n - i - 1]);
+}
+</code>
+</pre>
+</details>
+
+<details>
+<summary>Q10: Write functions isUpper() and toUpper()</summary>
+<pre><code>
+bool isUpper(int ch) {
+    return (ch >= 'A' && ch <= 'Z');
+}
+int toUpper(int ch) { 
+    if (isUpper(ch))
+        return ch;
+    else 
+        return (ch + 'A' - 'a');
+}
+</code></pre>
+</details>
+
+<details>
+<summary>Q11: What is the meaning of int(*a)(int) and int(*a[10])(int) ?</summary>
+A pointer to a function that takes an integer argument and returns an integer.
+
+An array of 10 pointers to functions that take an integer argument and return an integer.
+</details>
+
+<details>
+<summary>Q12: Re-write void(*(*papf)[3])(char *);</summary>
+Re-write void(*(*papf)[3])(char *);
+    
+typedef__________;
+    
+pf(*papf)[3];
+
+Ans:
+
+void (*pf) (char *)
+
+-> typedef void(*pf)(char *);
+</details>
+<details>
+<summary>Q13: write a code that check the input is a multiple of 3 or not without using division or mod</summary>
+<pre><code>
+//這個是剛好用 3 的特性來解
+int divide3(int a){
+    int ans = 0;
+    while(a){
+        ans += a&1;
+        a>>=1;
+        ans -= a&1;
+        a>>=1;
+    }
+    return !(ans);
+}
+
+///通用算法(This can be used for any number)
+/*
+set Number = abcde(2進位)
+abcde = abc<<2 + de
+      = abc*(4) + de
+      = abc(*3) + (abc + de)
+任何數字都可以用類似的方式拆出用 &跟<<完成的判斷 
+*/    
+      
+int isMult3(unsigned int n)
+{
+    if ( n == 0 || n == 3 )    
+        return 1;
+    if ( n < 3 ) 
+        return 0;
+    n = (n >> 2) + (n & 3);
+    /* Recursive call till you get nor a special terminate condition */
+    return(isMult3(n));
+}
+</code></pre>
+</details>
+<details>
+<summary>Q14: pointer 萬年題</summary>
+<pre><code>
+int a[5]={1,2,3,4,5};
+int *p=a;
+*(p++)+=123;
+*(++p)+=123;
+</code></code></pre>
+
+請問a陣列的每個值為何?
+
+Ans:
+萬年面試題目
+
+124 2 126 4 5
+</details>
+
+<details>
+<summary>Q15: function pointer</summary>
+<pre><code>
+extern void func1(void);
+extern void func2(void);
+extern void func3(void);
+extern void func4(void);
+extern void func5(void);
+
+void main(int n)
+{
+   if n==1 execute func1;
+   if n==2 execute func2;
+   if n==3 execute func3;
+   if n==4 execute func4;
+   if n==5 execute func5;
+}
+</code></pre>
+
+保證 n 一定是上面五個數字之一
+
+不能用if 和 switch case , 請用你認為最快的方法實作main
+<pre><code>
+void (*fp[5]) ();
+fp[0] = func1;
+fp[1] = func2;
+fp[2] = func3;
+fp[3] = func4;
+fp[4] = func5;
+fp[n-1]();
+</code></pre>
+</details>
+
+<details>
+<summary>Q6: 寫一個“標準”巨集MIN ，這個巨集輸入兩個參數並返回較小的一個</summary>
+#define min(a,b) ((a)<(b)?(a):(b))
+</details>
+
+<details>
+<summary>Q17: 寫出一個function判斷輸入的數是2的次方</summary>
+<pre><code>
+inline int define2N(int n){
+    return (!(n&n-1) && n!=0)
+}
+</code></pre>
+</details>
+<details>
+<summary>Q18: Write a MACRO to calculate the square of integer a.</summary>
+#define sqare(x) ((x)*(x))
+</details>
+
 
 # OS TEST
 ## 名詞解釋
