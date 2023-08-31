@@ -152,6 +152,78 @@ rvalue 是一個物件在某個時間單位的結果
 ++c 是lvalue
 c++ 是rvalue
 </details>
+<details>
+<summary>Q11: 以下Unix命令分別是做什麼用的?</summary>
+
+    1. chmod: 更改存取權限
+
+    2. who: 显示当前登录系统的用户
+
+    3. which: 查看可执行文件的位置
+
+    4. echo: 顯示訊息
+
+    5. whereis - 查看文件的位置
+
+    6. locate - 配合数据库查看文件位置
+  
+    7. find - 实际搜寻硬盘查询文件名称
+
+</details>
+
+<details>
+<summary>Q12: sizeof 不是函式</summary>
+    
+sizeof 不是函式，不會在執行時計算變數或型別的值，而是在編譯時，所有的 sizeof 都被具體的值替換。
+
+<pre><code>
+double f(){
+  printf("Come into Double f...\n");
+  return 0.0;
+}
+
+int main(){
+  int var=0;
+  int size=sizeof(var++);  //sizeof(var++)在編譯時會直接被替換++不會執行
+  printf("var = %d, size = %d\n", var, size);
+  size = sizeof(f());
+  printf("size = %d\n", size);
+  return 0;
+}
+
+</code></pre>
+
+##output
+var = 0, size = 4
+size = 8
+
+
+常見考題
+
+    64bit
+    sizeof(string)          = 8
+    sizeof(char)         = 1
+    sizeof(p)            = 8
+    sizeof(short)        = 2
+    sizeof(int)          = 4
+    sizeof(long)         = 8
+    sizeof(long long)    = 8
+    sizeof(size_t)       = 8
+    sizeof(double)       = 8
+    sizeof(long double)  = 16
+    32bit
+    sizeof(string)          = 4
+    sizeof(char)         = 1
+    sizeof(p)            = 4  //指標
+    sizeof(short)        = 2
+    sizeof(int)          = 4  //怕因環境影響程式,絕大多數64,32的編譯器是一樣大
+    sizeof(long)         = 4      
+    sizeof(long long)    = 8
+    sizeof(size_t)       = 4
+    sizeof(double)       = 8
+    sizeof(long double)  = 12    //看作long+double = 4 + 8 =12
+    
+</details>
 
 ## 程式題
 <details>
@@ -440,6 +512,69 @@ inline int define2N(int n){
 #define sqare(x) ((x)*(x))
 </details>
 
+<details>
+<summary>Q19: 使用bitwise operation實作swap function</summary>
+<pre><code>
+void swap(int *a, int *b)
+{
+    *a = *a ^ *b;
+    *b = *a ^ *b;
+    *a = *a ^ *b;
+}
+</code></pre>
+</details>
+
+<details>
+<summary>Q20: 用一行程式碼判斷是否為2的冪次方</summary>
+
+Ans: return N>0 && (N&(N-1)) == 0
+</details>
+
+<details>
+<summary>Q21:  the content of array a?</summary>
+Int a[] = {6, 7, 8, 9, 10};
+
+Int *p=a;
+
+*(p++)+=123;
+
+*(++p)+=123;
+Ans:a[] = {129, 7, 131, 9, 10} (這題考運算子的優先順序)
+</details>
+<details>
+<summary>Q22: Output the result</summary>
+<pre><code>
+int fun(int x)
+{
+    int count = 0;
+    while(x){
+        count++;
+        x = x & (x-1)
+    }
+    return count
+}
+
+fun(456) + fun(123) + fun(789) = ? (15)
+</code></pre>
+Ans: 4 + 6 + 5 = 15 (計算輸入進來的數字，其二進位表示有幾個1)
+</details>
+
+<details>
+<summary>Q23: Output the result</summary>
+<pre><code>
+#define INC(x) x*=2; x+=1
+
+int main()
+{
+    int i, j;
+    for (i = 0, j = 1; i < 5; i++)
+    INC(j);
+    printf("j = %d\n", j);
+}
+</code></pre>
+求J輸出值是多少?
+Ans: 2 (玄機在for迴圈沒有括號)
+</details>
 
 # OS TEST
 ## 名詞解釋
