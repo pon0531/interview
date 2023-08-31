@@ -576,6 +576,45 @@ int main()
 Ans: 2 (玄機在for迴圈沒有括號)
 </details>
 
+<details>
+<summary>Q24: Count the number of 1 in an integer x (in binary) ?</summary>
+<pre><code>
+int main()
+{
+    int x = 0b111010111111;
+    int count =0;
+    while(x>0)
+    {
+        x = x & (x-1);
+        count++;
+    }
+    
+    printf("count=%d\n",count);
+    return 0;
+}
+</code></pre>
+</details>
+
+<details>
+<summary>Q25: Write a code to reverse the linked list.</summary>
+<pre><code>
+void reverse_list(ListNode* head) {
+    //create three pointer precedent, current, and previous
+    ListNode *curr = head,
+             *prev = NULL,
+             *prec = NULL;
+    while(curr) {
+        prec = curr->prec;
+        curr->next = prev;
+        prev = curr;
+        curr = prec;
+    }
+    head = prev;
+}
+</code></pre>
+</details>
+
+
 # OS TEST
 ## 名詞解釋
 <details>
